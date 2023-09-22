@@ -14,7 +14,9 @@ body {
 /* Sidebar */
 .sidebar {
     width: 250px;
+    text-align: center;
     background-color: #2f3136;
+    border-radius: 20px;
 }
 
 .server-list {
@@ -41,6 +43,8 @@ body {
     background-color: #7289da;
     padding: 8px;
     text-align: center;
+    border-radius: 20px;
+
 }
 
 .message-list {
