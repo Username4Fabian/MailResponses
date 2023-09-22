@@ -44,9 +44,7 @@ mvn_wrapper_cache/
 /src/main/resources/application-test.properties
 /src/main/resources/application-prod.properties
 
-# Spring Boot generated resources
-/src/main/resources/static/
-/src/main/resources/templates/
+
 
 # IDE-specific directories
 /.idea/
