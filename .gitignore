@@ -44,7 +44,7 @@ mvn_wrapper_cache/
 /src/main/resources/application-test.properties
 /src/main/resources/application-prod.properties
 
-
+/frontend
 
 # IDE-specific directories
 /.idea/
