@@ -55,5 +55,3 @@ mvn_wrapper_cache/
 /build/
 # Misc.xml
 /.idea/misc.xml
-# config.json
-/config/config.json
