@@ -53,3 +53,5 @@ mvn_wrapper_cache/
 # Gradle files
 .gradle/
 /build/
+# Misc.xml
+/.idea/misc.xml
