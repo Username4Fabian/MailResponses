@@ -18,11 +18,15 @@ body {
     text-align: center;
     background-color: #2f3136;
     border-radius: 20px;
+    margin-top: 20px;
     margin-bottom: 20px;
+    margin-left: 10px;
     overflow-y: auto;
     float: left;
     clear: left;
+    height: 200px;
 
+;
 }
 
 
@@ -33,9 +37,11 @@ body {
     background-color: #2f3136;
     border-radius: 20px;
     margin-bottom: 20px;
+    margin-left: 10px;
     overflow-y: scroll;
     float: left;
     clear: left;
+    height: 700px
 
 }
 
