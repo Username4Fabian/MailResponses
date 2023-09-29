@@ -12,11 +12,35 @@ body {
 }
 
 /* Sidebar */
-.sidebar {
+.sidebar-for-accounts {
+
     width: 250px;
     text-align: center;
     background-color: #2f3136;
     border-radius: 20px;
+    margin-bottom: 20px;
+    overflow-y: auto;
+    float: left;
+    clear: left;
+
+}
+
+
+.sidebar-for-mails {
+
+    width: 250px;
+    text-align: center;
+    background-color: #2f3136;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    overflow-y: scroll;
+    float: left;
+    clear: left;
+
+}
+
+.flex-for-sidebars{
+
 }
 
 .server-list {
@@ -44,7 +68,6 @@ body {
     padding: 8px;
     text-align: center;
     border-radius: 20px;
-
 }
 
 .message-list {
