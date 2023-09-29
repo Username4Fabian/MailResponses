@@ -86,6 +86,8 @@ body {
     justify-content: space-between;
     background-color: #40444b;
     padding: 8px;
+    display: flex;
+    flex-direction: column; /* Anordnung in Spalten */
 }
 
 input[type="text"] {
@@ -108,3 +110,53 @@ button {
 button:hover {
     background-color: #677bc4;
 }
+
+
+.message-input textarea {
+    height: 500px; /* Du kannst die Höhe nach Bedarf anpassen */
+    padding: 8px;
+    overflow-y: visible; /* Zeigt vertikales Scrollen, wenn der Text zu groß ist */
+    resize: none;
+    background-color: #2f3136;
+    color: white;
+}
+.personTo {
+    border: 10px solid #40444b; /* Setzt einen Rahmen um das gesamte div mit 1 Pixel Breite und grauer Farbe */
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+}
+
+.personTo input {
+    resize: none;
+    padding: 5px;
+    background-color: #2f3136;
+    color: white;
+    height: 5%;
+    width: 30%; /* Fülle die gesamte Breite des Containers aus */
+    box-sizing: border-box; /* Berücksichtigt das Padding und den Rand in der Gesamtbreite */
+    margin-left: 10px;
+
+
+
+}
+.personTo button {
+    margin: 10px;
+    width: 50%;
+    background-color: mediumseagreen;
+}
+
+button[name=anhang] {
+    background-color: brown;
+    cursor: not-allowed;
+    width: 40%;
+}
+
+
+.message-input button {
+    margin-top: 8px; /* Füge einen Abstand zwischen dem Textfeld und dem Button hinzu */
+}
+
+
+
+
