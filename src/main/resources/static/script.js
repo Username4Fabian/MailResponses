@@ -1,3 +1,4 @@
+
 document.addEventListener("DOMContentLoaded", function () {
     // Simuliere das Hinzufügen von neuen E-Mails
     setTimeout(function () {
@@ -35,4 +36,15 @@ document.addEventListener("DOMContentLoaded", function () {
         messageList.appendChild(emailTitle);
         messageList.appendChild(emailText);
     }
+
+
+
 });
+
+function uploadFile() {
+    var fileInput = document.getElementById('myFile');
+    var file = fileInput.files[0];
+    var formData = new FormData();
+    formData.append('file', file);
+
+}
