@@ -3,9 +3,12 @@ package htlle.mailresponse;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Map;
 
+import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -14,9 +17,9 @@ public class ChatGPT {
     private static final String API_Key = loadApiKey();
     private static final String input = "Sehr geehrter Herr Kondert! Können Sie sich mit Jogurt einschmieren? Mfg. Klaus Kepplinger";
 
-    public static void chatGPT(String text) throws Exception {
+    public static void chatGPT(String responseMood, String text) throws Exception {
 
-        JSONObject data = getJsonObject(text);
+        JSONObject data = getJsonObject(responseMood, text);
 
         HttpURLConnection con = getHttpURLConnection(data);
 
@@ -38,10 +41,10 @@ public class ChatGPT {
         return con;
     }
 
-    private static JSONObject getJsonObject(String text) throws JSONException {
+    private static JSONObject getJsonObject(String responseMood, String text) throws JSONException {
         JSONObject data = new JSONObject();
         data.put("model", "text-davinci-003");
-        data.put("prompt", text);
+        data.put("prompt", responseMood + ": " + text);
         data.put("max_tokens", 4000);
         data.put("temperature", 1.0);
         return data;
@@ -62,6 +65,6 @@ public class ChatGPT {
     }
 
     public static void main(String[] args) throws Exception {
-        chatGPT("Antworte auf dies E-Mail: " + input);
+        chatGPT("Antworte auf diese Email in einem aggresiven beleidigenden Stil", input);
     }
 }
