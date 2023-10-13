@@ -148,8 +148,22 @@ button:hover {
 
 button[name=anhang] {
     background-color: brown;
-    cursor: not-allowed;
+    /*cursor: not-allowed; */
     width: 40%;
+}
+
+
+input[type="file"] {
+    padding: 2%;
+    margin: 2%;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background: #40444b;
+    width: 95%;
+}
+
+form {
+    width: 10%;
 }
 
 
