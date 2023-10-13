@@ -56,4 +56,4 @@ mvn_wrapper_cache/
 
 /.idea/misc.xml
 
-data/db.mv.db
+emaildb.mv.db
