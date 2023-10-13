@@ -153,12 +153,16 @@ button[name=anhang] {
 
 
 input[type="file"] {
-    padding: 2%;
-    margin: 2%;
+    padding: 1.1%;
+    margin: 1%;
     border: 1px solid #ddd;
     border-radius: 5px;
     background: #40444b;
     width: 95%;
+}
+.file-input-button {
+    cursor: pointer;
+    background-color: #40444b;
 }
 
 form {
