@@ -148,7 +148,6 @@ button:hover {
 
 button[name=anhang] {
     background-color: brown;
-    /*cursor: not-allowed; */
     width: 40%;
 }
 
