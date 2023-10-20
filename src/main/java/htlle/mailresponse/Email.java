@@ -1,52 +1,47 @@
 package htlle.mailresponse;
 
-import jakarta.persistence.*;
 
-import java.time.LocalDateTime;
-import java.util.List;
+import java.sql.Timestamp;
 
-@Entity
 public class Email {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    private String senderAddress;
-
-    @ElementCollection
-    private List<String> recipientAddresses;
-
+    private int id;
+    private String receiver;
+    private String sender;
     private String subject;
+    private String content;
+    private Timestamp timestamp;
 
-    @Lob
-    private String messageBody;
+    public Email(int id, String receiver, String sender, String subject, String content, Timestamp timestamp) {
+        this.id = id;
+        this.receiver = receiver;
+        this.sender = sender;
+        this.content = content;
+        this.subject = subject;
+        this.timestamp = timestamp;
+    }
 
-    private LocalDateTime dateTime;
+    public String getReceiver() {
+        return receiver;
+    }
 
-    private boolean isRead;
+    public void setReceiver(String receiver) {
+        this.receiver = receiver;
+    }
 
-    public Long getId() {
+    public String getSender() {
+        return sender;
+    }
+
+    public void setSender(String sender) {
+        this.sender = sender;
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
-    }
-
-    public String getSenderAddress() {
-        return senderAddress;
-    }
-
-    public void setSenderAddress(String senderAddress) {
-        this.senderAddress = senderAddress;
-    }
-
-    public List<String> getRecipientAddresses() {
-        return recipientAddresses;
-    }
-
-    public void setRecipientAddresses(List<String> recipientAddresses) {
-        this.recipientAddresses = recipientAddresses;
     }
 
     public String getSubject() {
@@ -57,27 +52,19 @@ public class Email {
         this.subject = subject;
     }
 
-    public String getMessageBody() {
-        return messageBody;
+    public String getContent() {
+        return content;
     }
 
-    public void setMessageBody(String messageBody) {
-        this.messageBody = messageBody;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public LocalDateTime getDateTime() {
-        return dateTime;
+    public Timestamp getTimestamp() {
+        return timestamp;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
-    }
-
-    public boolean isRead() {
-        return isRead;
-    }
-
-    public void setRead(boolean read) {
-        isRead = read;
+    public void setTimestamp(Timestamp timestamp) {
+        this.timestamp = timestamp;
     }
 }
