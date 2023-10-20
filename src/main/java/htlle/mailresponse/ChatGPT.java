@@ -21,7 +21,7 @@ public class ChatGPT {
         chatGPT("Antworte auf diese Email in einem aggresiven beleidigenden Stil", input);
     }
 
-    public static void chatGPT(String responseMood, String text) throws Exception {
+    public static String chatGPT(String responseMood, String text) throws Exception {
 
         JSONObject data = getJsonObject(responseMood, text);
 
@@ -29,7 +29,7 @@ public class ChatGPT {
 
         String output = new BufferedReader(new InputStreamReader(con.getInputStream())).lines().reduce((a, b) -> a + b).get();
 
-        System.out.println(new JSONObject(output).getJSONArray("choices").getJSONObject(0).getString("text"));
+        return new JSONObject(output).getJSONArray("choices").getJSONObject(0).getString("text");
     }
 
     private static HttpURLConnection getHttpURLConnection(JSONObject data) throws IOException {
