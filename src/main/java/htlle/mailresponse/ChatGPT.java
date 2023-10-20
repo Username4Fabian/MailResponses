@@ -17,6 +17,10 @@ public class ChatGPT {
     private static final String API_Key = loadApiKey();
     private static final String input = "Sehr geehrter Herr Kondert! Können Sie sich mit Jogurt einschmieren? Mfg. Klaus Kepplinger";
 
+    public static void main(String[] args) throws Exception {
+        chatGPT("Antworte auf diese Email in einem aggresiven beleidigenden Stil", input);
+    }
+
     public static void chatGPT(String responseMood, String text) throws Exception {
 
         JSONObject data = getJsonObject(responseMood, text);
@@ -64,7 +68,5 @@ public class ChatGPT {
         }
     }
 
-    public static void main(String[] args) throws Exception {
-        chatGPT("Antworte auf diese Email in einem aggresiven beleidigenden Stil", input);
-    }
+
 }
