@@ -33,26 +33,34 @@ public class sendGetMail
         db.insertEmail(empfaenger, "bikebuilder03@outlook.com",betreff,inhalt);
     }
 
-    public static List<Email> receiveEmail(String smtpHost, String storeType){
-        Properties props = new Properties();
+    public static List<Email> receiveEmail(){
         List<Email> mails = new ArrayList<Email>();
-        props.setProperty("smtp-mail.outlook.com:587", smtpHost);
-
-        Session session = Session.getInstance(props);
-        try {
-            Store mailStore = session.getStore(storeType);
-            mailStore.connect(smtpHost, "bikebuilder03@outlook.com", "hutter1234");
-
-            Folder folder = mailStore.getFolder("INBOX");
-            folder.open(Folder.READ_ONLY);
-            Message[] emailMessages = folder.getMessages();
+        Properties properties = new Properties();
+        properties.put("mail.store.protocol", "imaps");
+        properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.ssl.protocols", "TLSv1.2");
+        properties.put("mail.smtp.starttls.enable", "true");
+        properties.put("mail.imap.host", "outlook.office365.com"); // IMAP server for Outlook
+        properties.put("mail.imap.port", "993");
+        Session session = Session.getInstance(properties, new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication("bikebuilder03@outlook.com", "hutter1234 ");
+            }
+        });
+            try {
+                Store store = session.getStore();
+                store.connect();
+                Folder inbox = store.getFolder("INBOX");
+                inbox.open(Folder.READ_ONLY);
+            Message[] emailMessages = inbox.getMessages();
             for(int i = 0;i< emailMessages.length;i++) {
                 mails.add(new Email(emailMessages[i].getMessageNumber(),emailMessages[i].getAllRecipients().toString()
                         ,emailMessages[i].getFrom().toString(),emailMessages[i].getSubject(),emailMessages[i].getContent().toString()
                         ,(Timestamp) emailMessages[i].getSentDate()));
             }
-            folder.close(false);
-            mailStore.close();
+                inbox.close(false);
+                store.close();
         } catch (Exception e) {
             e.printStackTrace();
             System.err.println("Error in receiving email.");
