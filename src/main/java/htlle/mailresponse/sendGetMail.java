@@ -14,9 +14,10 @@ public class sendGetMail
         EmailDatabase db = new EmailDatabase();
         Properties properties = System.getProperties();
         properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.ssl.protocols", "TLSv1.2");
         properties.put("mail.smtp.starttls.enable", "true");
-        properties.put("mail.smtp.host", "smtp-mail.outlook.com"); // Example: "smtp.office365.com" for Outlook
-        properties.put("mail.smtp.port", "587"); // Example: 587 for TLS
+        properties.put("mail.smtp.host", "smtp-mail.outlook.com");
+        properties.put("mail.smtp.port", "587");
         Session session = Session.getInstance(properties, new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
@@ -24,7 +25,7 @@ public class sendGetMail
             }
         });
         MimeMessage message = new MimeMessage(session);
-        message.setFrom( new InternetAddress( "bikebuilder03@outlook.com" ));
+        message.setFrom( new InternetAddress("bikebuilder03@outlook.com"));
         message.addRecipient(Message.RecipientType.TO, new InternetAddress(empfaenger));
         message.setSubject(betreff, "ISO-8859-1" );
         message.setText(inhalt,"UTF-8" );
