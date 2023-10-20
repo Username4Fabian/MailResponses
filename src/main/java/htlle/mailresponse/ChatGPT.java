@@ -1,16 +1,15 @@
 package htlle.mailresponse;
 
-import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Map;
-
-import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class ChatGPT {
 
@@ -22,15 +21,19 @@ public class ChatGPT {
     }
 
     public static void chatGPT(String responseMood, String text) throws Exception {
-
         JSONObject data = getJsonObject(responseMood, text);
-
         HttpURLConnection con = getHttpURLConnection(data);
-
         String output = new BufferedReader(new InputStreamReader(con.getInputStream())).lines().reduce((a, b) -> a + b).get();
+        String response = new JSONObject(output).getJSONArray("choices").getJSONObject(0).getString("text");
 
-        System.out.println(new JSONObject(output).getJSONArray("choices").getJSONObject(0).getString("text"));
+        // Print the response
+        System.out.println(response);
+
+        // Save the response into the database
+        EmailDatabase db = new EmailDatabase();
+        db.insertResponse("", "chatGPT", "Response to: " + text, response);
     }
+
 
     private static HttpURLConnection getHttpURLConnection(JSONObject data) throws IOException {
         String url = "https://api.openai.com/v1/completions";
@@ -67,6 +70,8 @@ public class ChatGPT {
             return null;
         }
     }
+
+
 
 
 }
