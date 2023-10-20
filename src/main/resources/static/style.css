@@ -11,6 +11,7 @@ body {
     display: flex;
 }
 
+
 /* Sidebar */
 .sidebar-for-accounts {
 
@@ -26,7 +27,7 @@ body {
     clear: left;
     height: 200px;
 
-;
+
 }
 
 
@@ -41,12 +42,11 @@ body {
     overflow-y: scroll;
     float: left;
     clear: left;
-    height: 700px
+    height: 700px;
 
 }
 
 .flex-for-sidebars{
-
 }
 
 .server-list {
@@ -67,6 +67,7 @@ body {
 .main {
     flex: 1;
     padding: 16px;
+    border-left: 5px solid grey;
 }
 
 .header {
