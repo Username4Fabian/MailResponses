@@ -53,7 +53,12 @@ mvn_wrapper_cache/
 # Gradle files
 .gradle/
 /build/
+
+# Misc.xml
 /.idea/misc.xml
 
-emaildb.mv.db
+#Config-File
+/config/config.json
 
+
+emaildb.mv.db

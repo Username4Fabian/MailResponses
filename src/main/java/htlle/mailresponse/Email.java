@@ -1,6 +1,4 @@
 package htlle.mailresponse;
-
-
 import java.sql.Timestamp;
 
 public class Email {
