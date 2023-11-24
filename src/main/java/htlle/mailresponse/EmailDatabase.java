@@ -6,6 +6,11 @@ import java.util.List;
 
 public class EmailDatabase {
 
+    private static final String DB_URL = "jdbc:h2:tcp://localhost/~/h2_db/MailResponse;AUTO_SERVER=TRUE";
+    private static final String DB_USER = "sa";
+    private static final String DB_PASSWORD = "";
+    private final Connection connection;
+
     public static void main(String[] args) {
         try {
             // Initialize the database
@@ -33,12 +38,6 @@ public class EmailDatabase {
         }
     }
 
-    private static final String DB_URL = "jdbc:h2:./emaildb;AUTO_SERVER=TRUE";
-    private static final String DB_USER = "sa";
-    private static final String DB_PASSWORD = "";
-
-    private final Connection connection;
-
     public EmailDatabase() throws SQLException {
         connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
         initDatabase();
@@ -48,6 +47,10 @@ public class EmailDatabase {
         try (Statement stmt = connection.createStatement()) {
             stmt.execute("CREATE TABLE IF NOT EXISTS emails (id INT AUTO_INCREMENT PRIMARY KEY, receiver VARCHAR(255), sender VARCHAR(255), subject VARCHAR(255), content TEXT, timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
         }
+    }
+
+    public void insertResponse(String receiver, String sender, String subject, String content) throws SQLException {
+        insertEmail(receiver, sender, subject, content);
     }
 
     public void insertEmail(String receiver, String sender, String subject, String content) throws SQLException {
