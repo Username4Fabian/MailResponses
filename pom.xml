@@ -10,6 +10,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
+	<!-- Test -->
 	<groupId>htlle</groupId>
 	<artifactId>mailresponse</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
