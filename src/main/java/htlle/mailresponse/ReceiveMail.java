@@ -4,11 +4,18 @@ import java.util.Properties;
 import javax.mail.*;
 
 public class ReceiveMail {
-    public static void main(String[] args) {
+
+    private String accountEmail;
+    private String password;
+
+    private ReceiveMail(String accountEmail, String password) {
+        this.accountEmail = accountEmail;
+        this.password = password;
+    }
+
+    public Message[] receiveEmails() {
         // Set the Outlook email account details
         String host = "outlook.office365.com";
-        String username = "bikebuilder03@outlook.com";
-        String password = "hutter1234";
 
         // Set the properties for the email session
         Properties properties = new Properties();
@@ -26,7 +33,7 @@ public class ReceiveMail {
 
             // Create the IMAP store
             Store store = emailSession.getStore("imaps");
-            store.connect(host, username, password);
+            store.connect(host, accountEmail, password);
 
             // Get the Inbox folder
             Folder inbox = store.getFolder("INBOX");
@@ -36,6 +43,7 @@ public class ReceiveMail {
             Message[] messages = inbox.getMessages();
 
             // Print details of each message
+            /*
             for (int i = 0; i < messages.length; i++) {
                 System.out.println("Subject: " + messages[i].getSubject());
                 System.out.println("From: " + messages[i].getFrom()[0]);
@@ -43,18 +51,23 @@ public class ReceiveMail {
                 System.out.println("Message: " + getTextMessageContent(messages[i]));
                 System.out.println("---------------------------------------------");
             }
+             */
 
             // Close the store and folder
             inbox.close(false);
             store.close();
 
+            return messages;
+
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        return null;
     }
 
     // Helper method to get the text content of a message
-    private static String getTextMessageContent(Message message) throws Exception {
+    private String getTextMessageContent(Message message) throws Exception {
         Object content = message.getContent();
         if (content instanceof String) {
             return (String) content;
@@ -76,7 +89,7 @@ public class ReceiveMail {
     }
 
     // Helper method to get the text content of a body part
-    private static String getTextMessageContent(BodyPart bodyPart) throws Exception {
+    private String getTextMessageContent(BodyPart bodyPart) throws Exception {
         Object content = bodyPart.getContent();
         if (content instanceof String) {
             return (String) content;
