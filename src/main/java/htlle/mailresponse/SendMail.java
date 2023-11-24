@@ -28,6 +28,10 @@ public class SendMail {
         props.put("mail.smtp.port", "587"); //TLS Port
         props.put("mail.smtp.auth", "true"); //enable authentication
         props.put("mail.smtp.starttls.enable", "true"); //enable STARTTLS
+        props.put("mail.smtp.ssl.trust", "smtp-mail.outlook.com");
+        props.put("mail.smtp.ssl.protocols", "TLSv1.2"); // Specify the appropriate TLS version
+        props.put("mail.smtp.ssl.ciphersuites", "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256"); // Specify an appropriate cipher suite
+
 
         //create Authenticator object to pass in Session.getInstance argument
         Authenticator auth = new Authenticator() {
