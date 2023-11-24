@@ -9,6 +9,7 @@ public class EmailDatabase {
     public static void main(String[] args) {
         try {
             // Initialize the database
+            // test comment
             EmailDatabase db = new EmailDatabase();
 
             // Insert a few emails
