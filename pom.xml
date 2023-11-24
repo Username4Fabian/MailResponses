@@ -10,6 +10,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
+    <!-- Test -->
     <groupId>htlle</groupId>
     <artifactId>mailresponse</artifactId>
     <version>0.0.1-SNAPSHOT</version>
@@ -32,6 +33,13 @@
         <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-spring-boot-starter</artifactId>
+        </dependency>
+
+        <!-- Mail Dependency -->
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.4.7</version>
         </dependency>
 
         <!-- JSON Dependency -->
