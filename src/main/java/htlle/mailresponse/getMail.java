@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-public class sendGetMail
+public class getMail
 {
     public static void sendMail( String betreff, String inhalt, String empfaenger) throws MessagingException, SQLException {
         EmailDatabase db = new EmailDatabase();
