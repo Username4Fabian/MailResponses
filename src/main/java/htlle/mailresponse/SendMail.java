@@ -20,7 +20,7 @@ public class SendMail {
     public static void main(String[] args) {
         final String fromEmail = "bikebuilder03@outlook.com"; //requires valid gmail id
         final String password = "hutter1234"; // correct password for gmail id
-        final String toEmail = "191witb16@o365.htl-leoben.at"; // can be any email id
+        final String toEmail = "191witb23@o365.htl-leoben.at"; // can be any email id
 
         System.out.println("TLSEmail Start");
         Properties props = new Properties();
