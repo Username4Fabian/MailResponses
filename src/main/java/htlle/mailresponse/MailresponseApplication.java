@@ -8,6 +8,7 @@ public class MailresponseApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(MailresponseApplication.class, args);
+		System.out.println("Server running at http://localhost:8080/");
 	}
-	
+
 }

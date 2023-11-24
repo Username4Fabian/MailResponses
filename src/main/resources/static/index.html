@@ -9,26 +9,57 @@
 
 <body>
 <div class="app">
-    <div class="sidebar">
-        <div class="new-emails">
-            <h2>Neue E-Mails</h2>
-            <ul id="email-list">
-                <!-- Neue E-Mails werden hier dynamisch hinzugefügt -->
-            </ul>
+
+    <flex class="flex-for-sidebars">
+
+        <div class="sidebar-for-accounts">
+            <div class="accounts-list">
+                <h2>Accounts</h2>
+                <ul id="account-list">
+                    <li>HTL1@htl-leoben.at</li>
+                    <li>HTL2@htl-leoben.at</li>
+
+                </ul>
+            </div>
         </div>
-    </div>
+
+
+        <div class="sidebar-for-mails">
+            <div class="email-list">
+                <h2>Emails</h2>
+                <ul id="email-list">
+
+
+                </ul>
+            </div>
+        </div>
+
+    </flex>
+
 
     <div class="main">
         <div class="header">
             <h1>Email Client</h1>
         </div>
         <div class="message-list" id="message-list">
-            <!-- Nachrichtenliste hier -->
+            <p>Message 1</p>
         </div>
+
+        <div class="personTo">
+            <input placeholder="To:">
+            <input placeholder="Subject:">
+            <button>ChatGPT Hilfe</button>
+            <label class="file-input-button" id="uploadLabel">
+                <input type="file" id="myFile" name="myFile" class="file-input" onclick="uploadFile()">
+                <img src="resources.images/file-upload-duotone.svg" alt="Datei Auswählen">
+            </label>
+        </div>
+
         <div class="message-input">
-            <input type="text" placeholder="Nachricht eingeben">
+            <textarea placeholder="Nachricht eingeben"></textarea>
             <button>Senden</button>
         </div>
+
     </div>
 </div>
 <script src="script.js"></script>
