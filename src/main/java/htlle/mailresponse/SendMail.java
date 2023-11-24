@@ -17,11 +17,20 @@ public class SendMail {
      */
 
 
-    public static void main(String[] args) {
-        final String fromEmail = "bikebuilder03@outlook.com"; //requires valid gmail id
-        final String password = "hutter1234"; // correct password for gmail id
-        final String toEmail = "191witb23@o365.htl-leoben.at"; // can be any email id
 
+    private String fromEmail;
+    private String emailPassword;
+
+
+    //final String fromEmail = "bikebuilder03@outlook.com"; //requires valid gmail id
+    //final String password = "hutter1234"; // correct password for gmail id
+
+    public SendMail(String fromEmail, String password) {
+        this.fromEmail = fromEmail;
+        this.emailPassword = password;
+    }
+
+    public void sendEmail(String toEmail, String subject, String message) {
         System.out.println("TLSEmail Start");
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp-mail.outlook.com"); //SMTP Host
@@ -37,12 +46,12 @@ public class SendMail {
         Authenticator auth = new Authenticator() {
             //override the getPasswordAuthentication method
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(fromEmail, password);
+                return new PasswordAuthentication(fromEmail, emailPassword);
             }
         };
         Session session = Session.getInstance(props, auth);
 
-        EmailUtil.sendEmail(session, toEmail, fromEmail, "TLSEmail Testing Subject", "TLSEmail Testing Body");
+        EmailUtil.sendEmail(session, toEmail, fromEmail, subject, message);
 
     }
 
