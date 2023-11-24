@@ -153,27 +153,36 @@ button[name=anhang] {
 }
 
 
+/* File Upload */
 input[type="file"] {
-    padding: 1.1%;
-    margin: 1%;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    background: #40444b;
-    width: 95%;
+    display: none;
 }
+
 .file-input-button {
+    display: inline-block;
+    padding: 6px 12px;
+    margin: 10px;
+    background: #6c6c76;
     cursor: pointer;
-    background-color: #40444b;
 }
-
-form {
-    width: 10%;
-}
-
 
 .message-input button {
     margin-top: 8px; /* Füge einen Abstand zwischen dem Textfeld und dem Button hinzu */
 }
+
+#account-list li:hover {
+    cursor: pointer; /* Hier kannst du den gewünschten Mauszeiger-Stil auswählen, z.B. pointer, crosshair, etc. */
+}
+
+#email-list li:hover {
+    cursor: pointer; /* Hier kannst du den gewünschten Mauszeiger-Stil auswählen, z.B. pointer, crosshair, etc. */
+}
+
+
+
+
+
+
 
 
 
