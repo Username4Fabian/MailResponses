@@ -1,21 +1,29 @@
 package htlle.mailresponse;
-import java.sql.Timestamp;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 
+import java.sql.Timestamp;
+@Entity
 public class Email {
-    private int id;
+    @Id
+    private Long id;
     private String receiver;
     private String sender;
     private String subject;
     private String content;
     private Timestamp timestamp;
 
-    public Email(int id, String receiver, String sender, String subject, String content, Timestamp timestamp) {
+    public Email(Long id, String receiver, String sender, String subject, String content, Timestamp timestamp) {
         this.id = id;
         this.receiver = receiver;
         this.sender = sender;
         this.content = content;
         this.subject = subject;
         this.timestamp = timestamp;
+    }
+
+    public Email() {
+
     }
 
     public String getReceiver() {
@@ -34,11 +42,11 @@ public class Email {
         this.sender = sender;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -65,4 +73,5 @@ public class Email {
     public void setTimestamp(Timestamp timestamp) {
         this.timestamp = timestamp;
     }
+
 }

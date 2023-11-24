@@ -71,7 +71,7 @@ public class EmailDatabase {
              ResultSet rs = pstmt.executeQuery()) {
             while (rs.next()) {
                 Email email = new Email(
-                        rs.getInt("id"),
+                        rs.getLong("id"),
                         rs.getString("receiver"),
                         rs.getString("sender"),
                         rs.getString("subject"),

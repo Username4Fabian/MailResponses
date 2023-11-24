@@ -17,8 +17,10 @@ public class SendMail {
      */
 
 
+
     private String fromEmail;
     private String emailPassword;
+
 
     //final String fromEmail = "bikebuilder03@outlook.com"; //requires valid gmail id
     //final String password = "hutter1234"; // correct password for gmail id
