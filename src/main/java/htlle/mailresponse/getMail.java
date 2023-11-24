@@ -36,34 +36,41 @@ public class getMail
     public static List<Email> receiveEmail(){
         List<Email> mails = new ArrayList<Email>();
         Properties properties = new Properties();
+        SendMail sendMail = new SendMail();
         properties.put("mail.store.protocol", "imaps");
         properties.put("mail.smtp.auth", "true");
         properties.put("mail.smtp.ssl.protocols", "TLSv1.2");
         properties.put("mail.smtp.starttls.enable", "true");
         properties.put("mail.imap.host", "outlook.office365.com"); // IMAP server for Outlook
         properties.put("mail.imap.port", "993");
-        Session session = Session.getInstance(properties, new Authenticator() {
-            @Override
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("bikebuilder03@outlook.com", "hutter1234 ");
+        try {
+            // Sitzung erstellen
+            Session session = Session.getDefaultInstance(properties);
+
+            // IMAP-Store öffnen
+            Store store = session.getStore("imaps");
+            store.connect(sendMail., username, password);
+
+            // Ordner auswählen (z.B., "INBOX" für Posteingang)
+            Folder inbox = store.getFolder("INBOX");
+            inbox.open(Folder.READ_ONLY);
+
+            // E-Mails abrufen und ausgeben
+            Message[] messages = inbox.getMessages();
+            for (int i = 0; i < messages.length; i++) {
+                Message message = messages[i];
+                System.out.println("Subject: " + message.getSubject());
+                System.out.println("From: " + message.getFrom()[0]);
+                System.out.println("Text: " + message.getContent().toString());
+                System.out.println("------------------------");
             }
-        });
-            try {
-                Store store = session.getStore();
-                store.connect();
-                Folder inbox = store.getFolder("INBOX");
-                inbox.open(Folder.READ_ONLY);
-            Message[] emailMessages = inbox.getMessages();
-            for(int i = 0;i< emailMessages.length;i++) {
-                mails.add(new Email(emailMessages[i].getMessageNumber(),emailMessages[i].getAllRecipients().toString()
-                        ,emailMessages[i].getFrom().toString(),emailMessages[i].getSubject(),emailMessages[i].getContent().toString()
-                        ,(Timestamp) emailMessages[i].getSentDate()));
-            }
-                inbox.close(false);
-                store.close();
+
+            // Ordner und Store schließen
+            inbox.close(false);
+            store.close();
+
         } catch (Exception e) {
             e.printStackTrace();
-            System.err.println("Error in receiving email.");
         }
         return mails;
     }
