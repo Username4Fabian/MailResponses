@@ -30,12 +30,11 @@ public class ChatGPT {
         // Print the response
         System.out.println(response);
 
-
-        return new JSONObject(output).getJSONArray("choices").getJSONObject(0).getString("text");
-
         // Save the response into the database
         EmailDatabase db = new EmailDatabase();
         db.insertResponse("", "chatGPT", "Response to: " + text, response);
+
+        return new JSONObject(output).getJSONArray("choices").getJSONObject(0).getString("text");
 
     }
 
