@@ -1,5 +1,4 @@
-/*
-package htlle.mailresponse.Application;
+package htlle.mailresponse.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,26 +11,18 @@ import java.util.List;
 
 @RestController
 public class ApplicationController {
-
+/*
     @PostMapping("/GPTanswer")
-
 
     @GetMapping("/GPTanswer")
 
-
-
     @GetMapping("/mail")
-
-
 
     @PostMapping("/mail")
 
-
-
     @GetMapping("/mailhistory")
-
+*/
 
 
 
 }
-*/
