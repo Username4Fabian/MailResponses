@@ -1,29 +1,16 @@
 package htlle.mailresponse.ChatGPT;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import htlle.mailresponse.Database.EmailDatabase;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Value;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Properties;
 
 public class ChatGPT {
-
-    @Value("${openai.api.key}")
-    private static String openaiApiKey;
-
-
-    private static final String input = "Sehr geehrter Herr Kondert! Können Sie sich mit Jogurt einschmieren? Mfg. Klaus Kepplinger";
-
-    public static void main(String[] args) throws Exception {
-        chatGPT("Antworte auf diese Email in einem aggresiven beleidigenden Stil", input);
-    }
+    private static String API_Key = loadApiKey();
 
     public static String chatGPT(String responseMood, String text) throws Exception {
 
@@ -35,14 +22,12 @@ public class ChatGPT {
         // Print the response
         System.out.println(response);
 
-        // Save the response into the database
         EmailDatabase db = new EmailDatabase();
         db.insertResponse("", "chatGPT", "Response to: " + text, response);
 
         return new JSONObject(output).getJSONArray("choices").getJSONObject(0).getString("text");
 
     }
-
 
     private static HttpURLConnection getHttpURLConnection(JSONObject data) throws IOException {
         String url = "https://api.openai.com/v1/completions";
@@ -67,20 +52,14 @@ public class ChatGPT {
     }
 
     public static String loadApiKey() {
-        ObjectMapper objectMapper = new ObjectMapper();
-        File configFile = new File("config/config.json"); // Replace with your JSON file path
-
+        Properties prop = new Properties();
+        InputStream input;
         try {
-            ApiKeyConfig apiKeyConfig = objectMapper.readValue(configFile, ApiKeyConfig.class);
-            String apiKey = apiKeyConfig.getApiKey();
-            return apiKey;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
+            input = new FileInputStream("src/main/resources/application.properties");
+            prop.load(input);
+            return prop.getProperty("openai.api.key");
+        } catch (IOException ignored) {
         }
+        return null;
     }
-
-
-
-
 }
