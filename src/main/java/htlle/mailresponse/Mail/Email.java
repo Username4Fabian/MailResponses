@@ -1,4 +1,4 @@
-package htlle.mailresponse;
+package htlle.mailresponse.Mail;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 

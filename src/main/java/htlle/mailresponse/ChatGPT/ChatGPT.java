@@ -1,8 +1,10 @@
-package htlle.mailresponse;
+package htlle.mailresponse.ChatGPT;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import htlle.mailresponse.Database.EmailDatabase;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -13,7 +15,10 @@ import java.net.URL;
 
 public class ChatGPT {
 
-    private static final String API_Key = loadApiKey();
+    @Value("${openai.api.key}")
+    private static String openaiApiKey;
+
+
     private static final String input = "Sehr geehrter Herr Kondert! Können Sie sich mit Jogurt einschmieren? Mfg. Klaus Kepplinger";
 
     public static void main(String[] args) throws Exception {

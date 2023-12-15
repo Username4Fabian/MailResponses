@@ -1,6 +1,8 @@
-package htlle.mailresponse;
+package htlle.mailresponse.Mail;
 
 
+
+import htlle.mailresponse.Mail.EmailUtil;
 
 import java.util.Properties;
 import javax.mail.Authenticator;

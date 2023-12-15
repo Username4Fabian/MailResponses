@@ -60,6 +60,7 @@ mvn_wrapper_cache/
 #Config-File
 /config/config.json
 
+src/main/resources/application.properties
 
 emaildb.mv.db
 

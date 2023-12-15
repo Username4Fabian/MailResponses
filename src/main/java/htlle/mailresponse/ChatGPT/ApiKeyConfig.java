@@ -1,4 +1,4 @@
-package htlle.mailresponse;
+package htlle.mailresponse.ChatGPT;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

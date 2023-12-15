@@ -1,4 +1,4 @@
-package htlle.mailresponse;
+package htlle.mailresponse.Mail;
 
 import java.util.Properties;
 import javax.mail.*;

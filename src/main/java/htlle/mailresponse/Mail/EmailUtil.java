@@ -1,4 +1,4 @@
-package htlle.mailresponse;
+package htlle.mailresponse.Mail;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import javax.activation.DataHandler;

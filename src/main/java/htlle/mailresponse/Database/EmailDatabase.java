@@ -1,4 +1,6 @@
-package htlle.mailresponse;
+package htlle.mailresponse.Database;
+
+import htlle.mailresponse.Mail.Email;
 
 import java.sql.*;
 import java.util.ArrayList;
