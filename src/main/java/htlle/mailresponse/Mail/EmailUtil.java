@@ -33,7 +33,7 @@ public class EmailUtil {
             msg.addHeader("format", "flowed");
             msg.addHeader("Content-Transfer-Encoding", "8bit");
 
-            msg.setFrom(new InternetAddress(fromEmail, "NoReply-JD"));
+            msg.setFrom(new InternetAddress(fromEmail, "bike builder"));
 
             msg.setReplyTo(InternetAddress.parse(toEmail, false));
 

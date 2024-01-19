@@ -1,5 +1,6 @@
-package htlle.mailresponse.Mail;
+package htlle.mailresponse.Repository;
 
+import htlle.mailresponse.Mail.EmailDummy;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface EmailRepository extends JpaRepository<EmailDummy, Long> {

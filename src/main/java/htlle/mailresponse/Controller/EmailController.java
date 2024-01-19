@@ -1,7 +1,7 @@
 package htlle.mailresponse.Controller;
 
 import htlle.mailresponse.Mail.EmailDummy;
-import htlle.mailresponse.Mail.EmailRepository;
+import htlle.mailresponse.Repository.EmailRepository;
 import htlle.mailresponse.Mail.SendMail;
 import htlle.mailresponse.Repository.UserRepository;
 import htlle.mailresponse.model.User;
@@ -34,7 +34,9 @@ public class EmailController {
     public EmailDummy sendEmail(@RequestParam int userId, @RequestParam String to, @RequestParam String subject, @RequestParam String text) {
         User user = userRepository.findById(userId);
         EmailDummy emailDummy = new EmailDummy(to, subject, text, user);
+        System.out.println(emailDummy.getContent());
         SendMail.sendEmail(emailDummy);
-        return emailRepository.save(emailDummy);
+        emailRepository.save(emailDummy);
+        return emailDummy;
     }
 }

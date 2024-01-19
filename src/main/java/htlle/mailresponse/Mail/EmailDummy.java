@@ -1,23 +1,24 @@
 package htlle.mailresponse.Mail;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import htlle.mailresponse.model.User;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
 import java.sql.Timestamp;
 @Entity
 public class EmailDummy {
     @Id
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
     private String receiver;
     @ManyToOne
+    @JsonIgnoreProperties({"emails"})
     private User user;
     private String subject;
     private String content;
     private Timestamp timestamp;
 
-    public EmailDummy(Long id, String receiver, String subject, String content, User user, Timestamp timestamp) {
-        this.id = id;
+    public EmailDummy(String receiver, String subject, String content, User user, Timestamp timestamp) {
         this.receiver = receiver;
         this.content = content;
         this.subject = subject;
@@ -45,11 +46,11 @@ public class EmailDummy {
         this.receiver = receiver;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
