@@ -1,29 +1,29 @@
 # MailResponses
 
 ## Summary:
-The project, named `MailResponses`, is a Java-based application built using Spring Boot and Maven. It is designed to interact with the OpenAI GPT-3 API and handle email responses. The application is divided into two main parts: the backend, which is written in Java, and the frontend, which is written in HTML, CSS, and JavaScript.
+The project, named `MailResponses`, is a Java-based application built using Spring Boot and Maven. It is designed to interact with the OpenAI GPT-3 API and handle emailDummy responses. The application is divided into two main parts: the backend, which is written in Java, and the frontend, which is written in HTML, CSS, and JavaScript.
 
 Backend:
 - `ApiKeyConfig.java`: This class maps the JSON configuration file that contains the API key needed to interact with the OpenAI GPT-3 API.
 - `ChatGPT.java`: This class interacts with the OpenAI GPT-3 API to generate responses to given prompts.
-- `Email.java`: This class is a JPA entity that represents an email. It includes fields for the email's id, receiver, sender, subject, content, and timestamp.
+- `Email.java`: This class is a JPA entity that represents an emailDummy. It includes fields for the emailDummy's id, receiver, sender, subject, content, and timestamp.
 - `EmailDatabase.java`: This class interacts with a H2 database to store and retrieve `Email` objects.
 - `EmailRepository.java`: This interface extends `JpaRepository` to gain access to a wide range of methods for interacting with the database.
-- `EmailUtil.java`: This utility class uses the JavaMail API to send an email.
+- `EmailUtil.java`: This utility class uses the JavaMail API to send an emailDummy.
 - `MailresponseApplication.java`: This class is the entry point of the Spring Boot application.
-- `ReceiveMail.java`: This class receives emails from an Outlook account using the JavaMail API.
-- `SendMail.java`: This class sends emails from an Outlook account using the JavaMail API.
+- `ReceiveMail.java`: This class receives emailDummies from an Outlook account using the JavaMail API.
+- `SendMail.java`: This class sends emailDummies from an Outlook account using the JavaMail API.
 
 Frontend:
-- `index.html`: This HTML document provides a user interface for the email client application.
-- `script.js`: This JavaScript file simulates the addition of new emails to the email client interface and handles user interactions.
+- `index.html`: This HTML document provides a user interface for the emailDummy client application.
+- `script.js`: This JavaScript file simulates the addition of new emailDummies to the emailDummy client interface and handles user interactions.
 - `style.css`: This CSS file is used for styling the web page.
 
 Server Configuration/Database:
 - `application.properties`: This properties file configures the H2 database connection, Hibernate settings, and other application-wide settings.
 - `MailResponse.mv.db`: This is the database file for the H2 database used in the application. It stores all the data of the application, including tables, records, and other database objects.
 
-The application is designed to receive emails from an Outlook account, generate responses using the OpenAI GPT-3 API, and send the responses back. It also stores the emails in a H2 database. The frontend provides a user interface for displaying the emails and interacting with the application.
+The application is designed to receive emailDummies from an Outlook account, generate responses using the OpenAI GPT-3 API, and send the responses back. It also stores the emailDummies in a H2 database. The frontend provides a user interface for displaying the emailDummies and interacting with the application.
 
 <br>
 <br>
@@ -125,7 +125,7 @@ public String getReceiver() {
 }
 ```
 
-In summary, the `Email` class is a simple JPA entity that represents an email. It includes fields for the email's id, receiver, sender, subject, content, and timestamp, as well as methods to get and set these values.
+In summary, the `Email` class is a simple JPA entity that represents an emailDummy. It includes fields for the emailDummy's id, receiver, sender, subject, content, and timestamp, as well as methods to get and set these values.
 
 <br>
 
@@ -147,21 +147,21 @@ public EmailDatabase() throws SQLException {
 }
 ```
 
-The `initDatabase` method is called within the constructor to ensure that the `emails` table exists in the database. This method executes a SQL `CREATE TABLE IF NOT EXISTS` statement.
+The `initDatabase` method is called within the constructor to ensure that the `emailDummies` table exists in the database. This method executes a SQL `CREATE TABLE IF NOT EXISTS` statement.
 
 ```java
 private void initDatabase() throws SQLException {
     try (Statement stmt = connection.createStatement()) {
-        stmt.execute("CREATE TABLE IF NOT EXISTS emails (id INT AUTO_INCREMENT PRIMARY KEY, receiver VARCHAR(255), sender VARCHAR(255), subject VARCHAR(255), content TEXT, timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
+        stmt.execute("CREATE TABLE IF NOT EXISTS emailDummies (id INT AUTO_INCREMENT PRIMARY KEY, receiver VARCHAR(255), sender VARCHAR(255), subject VARCHAR(255), content TEXT, timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
     }
 }
 ```
 
-The `insertEmail` method is used to insert a new email into the `emails` table. It prepares a SQL `INSERT INTO` statement with the receiver, sender, subject, and content of the email, and then executes the statement.
+The `insertEmail` method is used to insert a new emailDummy into the `emailDummies` table. It prepares a SQL `INSERT INTO` statement with the receiver, sender, subject, and content of the emailDummy, and then executes the statement.
 
 ```java
 public void insertEmail(String receiver, String sender, String subject, String content) throws SQLException {
-    String sql = "INSERT INTO emails (receiver, sender, subject, content) VALUES (?, ?, ?, ?)";
+    String sql = "INSERT INTO emailDummies (receiver, sender, subject, content) VALUES (?, ?, ?, ?)";
     try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
         pstmt.setString(1, receiver);
         pstmt.setString(2, sender);
@@ -172,16 +172,16 @@ public void insertEmail(String receiver, String sender, String subject, String c
 }
 ```
 
-The `getAllEmails` method retrieves all emails from the `emails` table. It prepares a SQL `SELECT * FROM` statement, executes the statement, and processes the result set to create a list of `Email` objects.
+The `getAllEmails` method retrieves all emailDummies from the `emailDummies` table. It prepares a SQL `SELECT * FROM` statement, executes the statement, and processes the result set to create a list of `Email` objects.
 
 ```java
 public List<Email> getAllEmails() throws SQLException {
-    List<Email> emails = new ArrayList<>();
-    String sql = "SELECT * FROM emails";
+    List<Email> emailDummies = new ArrayList<>();
+    String sql = "SELECT * FROM emailDummies";
     try (PreparedStatement pstmt = connection.prepareStatement(sql);
          ResultSet rs = pstmt.executeQuery()) {
         while (rs.next()) {
-            Email email = new Email(
+            Email emailDummy = new Email(
                     rs.getLong("id"),
                     rs.getString("receiver"),
                     rs.getString("sender"),
@@ -189,10 +189,10 @@ public List<Email> getAllEmails() throws SQLException {
                     rs.getString("content"),
                     rs.getTimestamp("timestamp")
             );
-            emails.add(email);
+            emailDummies.add(emailDummy);
         }
     }
-    return emails;
+    return emailDummies;
 }
 ```
 
@@ -220,21 +220,21 @@ In summary, the `EmailRepository` interface is a simple example of a Spring Data
 <br>
 
 ### EmailUtils.java:
-The provided code is a Java utility class named `EmailUtil` that is part of the `htlle.mailresponse` package. This class is used to send an email using the JavaMail API.
+The provided code is a Java utility class named `EmailUtil` that is part of the `htlle.mailresponse` package. This class is used to send an emailDummy using the JavaMail API.
 
-The `EmailUtil` class has a single static method, `sendEmail`, which takes a `Session`, `toEmail`, `fromEmail`, `subject`, and `body` as parameters. This method is used to send an email with the specified parameters.
+The `EmailUtil` class has a single static method, `sendEmail`, which takes a `Session`, `toEmail`, `fromEmail`, `subject`, and `body` as parameters. This method is used to send an emailDummy with the specified parameters.
 
 ```java
 public static void sendEmail(Session session, String toEmail, String fromEmail, String subject, String body){
 ```
 
-Inside the `sendEmail` method, a `MimeMessage` object is created using the provided `Session`. The `MimeMessage` class is a part of the JavaMail API and represents an email message.
+Inside the `sendEmail` method, a `MimeMessage` object is created using the provided `Session`. The `MimeMessage` class is a part of the JavaMail API and represents an emailDummy message.
 
 ```java
 MimeMessage msg = new MimeMessage(session);
 ```
 
-Several headers are set on the `MimeMessage` object, including the content type, format, and content transfer encoding. These headers specify the format and encoding of the email.
+Several headers are set on the `MimeMessage` object, including the content type, format, and content transfer encoding. These headers specify the format and encoding of the emailDummy.
 
 ```java
 msg.addHeader("Content-type", "text/HTML; charset=UTF-8");
@@ -242,7 +242,7 @@ msg.addHeader("format", "flowed");
 msg.addHeader("Content-Transfer-Encoding", "8bit");
 ```
 
-The `setFrom`, `setReplyTo`, `setSubject`, `setText`, and `setSentDate` methods are used to set the from address, reply-to address, subject, body, and sent date of the email, respectively.
+The `setFrom`, `setReplyTo`, `setSubject`, `setText`, and `setSentDate` methods are used to set the from address, reply-to address, subject, body, and sent date of the emailDummy, respectively.
 
 ```java
 msg.setFrom(new InternetAddress(fromEmail, "NoReply-JD"));
@@ -252,14 +252,14 @@ msg.setText(body, "UTF-8");
 msg.setSentDate(new Date());
 ```
 
-The `setRecipients` method is used to set the recipients of the email. The `Transport.send` method is then used to send the email.
+The `setRecipients` method is used to set the recipients of the emailDummy. The `Transport.send` method is then used to send the emailDummy.
 
 ```java
 msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail, false));
 Transport.send(msg);
 ```
 
-In summary, the `EmailUtil` class is a simple utility class that uses the JavaMail API to send an email. It demonstrates how to create a `MimeMessage`, set various properties on the message, and send the message.
+In summary, the `EmailUtil` class is a simple utility class that uses the JavaMail API to send an emailDummy. It demonstrates how to create a `MimeMessage`, set various properties on the message, and send the message.
 
 <br>
 
@@ -295,7 +295,7 @@ In summary, the `MailresponseApplication` class is a typical Spring Boot applica
 <br>
 
 ### ReceiveMail.java:
-The provided code is a Java class named `ReceiveMail` that is part of the `htlle.mailresponse` package. This class is used to receive emails from an Outlook account using the JavaMail API.
+The provided code is a Java class named `ReceiveMail` that is part of the `htlle.mailresponse` package. This class is used to receive emailDummies from an Outlook account using the JavaMail API.
 
 The `ReceiveMail` class has two private fields, `accountEmail` and `password`, which are used to authenticate with the Outlook account.
 
@@ -304,7 +304,7 @@ private String accountEmail;
 private String password;
 ```
 
-The `receiveEmails` method is used to receive emails from the account. It first sets up the properties for the email session, including the protocol, host, port, and SSL settings.
+The `receiveEmails` method is used to receive emailDummies from the account. It first sets up the properties for the emailDummy session, including the protocol, host, port, and SSL settings.
 
 ```java
 Properties properties = new Properties();
@@ -316,7 +316,7 @@ properties.put("mail.imaps.ssl.protocols", "TLSv1.2");
 properties.put("mail.imaps.ssl.ciphersuites", "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256");
 ```
 
-It then creates the email session and connects to the IMAP store using the account email and password.
+It then creates the emailDummy session and connects to the IMAP store using the account emailDummy and password.
 
 ```java
 Session emailSession = Session.getInstance(properties);
@@ -357,12 +357,12 @@ private String getTextMessageContent(Message message) throws Exception {
 }
 ```
 
-In summary, the `ReceiveMail` class is a simple example of how to receive emails from an Outlook account using the JavaMail API. It demonstrates how to set up an email session, connect to an IMAP store, retrieve messages from the Inbox, and extract the text content of the messages.
+In summary, the `ReceiveMail` class is a simple example of how to receive emailDummies from an Outlook account using the JavaMail API. It demonstrates how to set up an emailDummy session, connect to an IMAP store, retrieve messages from the Inbox, and extract the text content of the messages.
 
 <br>
 
 ### SendMail.java:
-The provided code is a Java class named `SendMail` that is part of the `htlle.mailresponse` package. This class is used to send emails from an Outlook account using the JavaMail API.
+The provided code is a Java class named `SendMail` that is part of the `htlle.mailresponse` package. This class is used to send emailDummies from an Outlook account using the JavaMail API.
 
 The `SendMail` class has two private fields, `fromEmail` and `emailPassword`, which are used to authenticate with the Outlook account.
 
@@ -371,7 +371,7 @@ private String fromEmail;
 private String emailPassword;
 ```
 
-The `sendEmail` method is used to send an email from the account. It first sets up the properties for the email session, including the SMTP host, port, authentication, and SSL settings.
+The `sendEmail` method is used to send an emailDummy from the account. It first sets up the properties for the emailDummy session, including the SMTP host, port, authentication, and SSL settings.
 
 ```java
 Properties props = new Properties();
@@ -384,7 +384,7 @@ props.put("mail.smtp.ssl.protocols", "TLSv1.2");
 props.put("mail.smtp.ssl.ciphersuites", "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256");
 ```
 
-It then creates the email session and authenticates with the Outlook account using the `fromEmail` and `emailPassword` fields.
+It then creates the emailDummy session and authenticates with the Outlook account using the `fromEmail` and `emailPassword` fields.
 
 ```java
 Authenticator auth = new Authenticator() {
@@ -395,20 +395,20 @@ Authenticator auth = new Authenticator() {
 Session session = Session.getInstance(props, auth);
 ```
 
-The `EmailUtil.sendEmail` method is then called to send the email. This method takes the email session, to email, from email, subject, and message as parameters.
+The `EmailUtil.sendEmail` method is then called to send the emailDummy. This method takes the emailDummy session, to emailDummy, from emailDummy, subject, and message as parameters.
 
 ```java
 EmailUtil.sendEmail(session, toEmail, fromEmail, subject, message);
 ```
 
-In summary, the `SendMail` class is a simple example of how to send emails from an Outlook account using the JavaMail API. It demonstrates how to set up an email session, authenticate with an Outlook account, and send an email.
+In summary, the `SendMail` class is a simple example of how to send emailDummies from an Outlook account using the JavaMail API. It demonstrates how to set up an emailDummy session, authenticate with an Outlook account, and send an emailDummy.
 
 <br>
 <br>
 
 ## Documentation - Frontend - 01.12.2023:
 ### index.html:
-The provided code is an HTML document that serves as the main interface for an email client application. The document structure is defined using standard HTML tags such as `<!DOCTYPE html>`, `<html>`, `<head>`, and `<body>`.
+The provided code is an HTML document that serves as the main interface for an emailDummy client application. The document structure is defined using standard HTML tags such as `<!DOCTYPE html>`, `<html>`, `<head>`, and `<body>`.
 
 ```html
 <!DOCTYPE html>
@@ -430,7 +430,7 @@ The `<body>` section contains the main content of the webpage. It includes a `di
 <div class="app">
 ```
 
-Inside the `app` div, there is a `flex` element that contains two sidebars: one for accounts and one for emails. Each sidebar includes a list (`ul`) of items (`li`).
+Inside the `app` div, there is a `flex` element that contains two sidebars: one for accounts and one for emailDummies. Each sidebar includes a list (`ul`) of items (`li`).
 
 ```html
 <flex class="flex-for-sidebars">
@@ -445,7 +445,7 @@ Inside the `app` div, there is a `flex` element that contains two sidebars: one 
     </div>
 ```
 
-The main section of the application includes a header with a title, a list of messages, a section for entering the recipient and subject of an email, and a section for entering the body of the email.
+The main section of the application includes a header with a title, a list of messages, a section for entering the recipient and subject of an emailDummy, and a section for entering the body of the emailDummy.
 
 ```html
 <div class="main">
@@ -479,12 +479,12 @@ Finally, the document includes a script tag at the end of the body that links to
 </html>
 ```
 
-In summary, this HTML document provides a user interface for an email client application. It includes sections for displaying accounts and emails, composing new emails, and interacting with the application.
+In summary, this HTML document provides a user interface for an emailDummy client application. It includes sections for displaying accounts and emailDummies, composing new emailDummies, and interacting with the application.
 
 <br>
 
 ### script.js:
-The provided code is a JavaScript file named `script.js` that is part of the static resources of a Spring Boot application. This script is responsible for simulating the addition of new emails to an email client interface and handling user interactions with the interface.
+The provided code is a JavaScript file named `script.js` that is part of the static resources of a Spring Boot application. This script is responsible for simulating the addition of new emailDummies to an emailDummy client interface and handling user interactions with the interface.
 
 The script begins by adding an event listener for the `DOMContentLoaded` event. This event is fired when the initial HTML document has been completely loaded and parsed, without waiting for stylesheets, images, and subframes to finish loading.
 
@@ -492,13 +492,13 @@ The script begins by adding an event listener for the `DOMContentLoaded` event. 
 document.addEventListener("DOMContentLoaded", function () {
 ```
 
-Inside the event listener, a function named `addNewEmail` is defined. This function takes an email subject, content, and sender as parameters, and adds a new email to the email list in the sidebar of the interface.
+Inside the event listener, a function named `addNewEmail` is defined. This function takes an emailDummy subject, content, and sender as parameters, and adds a new emailDummy to the emailDummy list in the sidebar of the interface.
 
 ```javascript
 function addNewEmail(emailSubject, emailContent, emailSender) {
 ```
 
-The function creates a new list item (`li`), sets its text content to the email subject, and appends it to the email list. It also adds a click event listener to the list item, which calls the `openEmail` function when the item is clicked.
+The function creates a new list item (`li`), sets its text content to the emailDummy subject, and appends it to the emailDummy list. It also adds a click event listener to the list item, which calls the `openEmail` function when the item is clicked.
 
 ```javascript
 listItem.addEventListener("click", function () {
@@ -506,7 +506,7 @@ listItem.addEventListener("click", function () {
 });
 ```
 
-The script then simulates the addition of new emails by calling the `addNewEmail` function in a loop. Each iteration of the loop is delayed by 2 seconds using the `setTimeout` function.
+The script then simulates the addition of new emailDummies by calling the `addNewEmail` function in a loop. Each iteration of the loop is delayed by 2 seconds using the `setTimeout` function.
 
 ```javascript
 for (let i = 1; i <= 10; i++) {
@@ -519,7 +519,7 @@ for (let i = 1; i <= 10; i++) {
 }
 ```
 
-The `openEmail` function is used to display an email in the main area of the interface. It takes an email subject, content, and sender as parameters, and creates and appends new HTML elements to the message list to display these details.
+The `openEmail` function is used to display an emailDummy in the main area of the interface. It takes an emailDummy subject, content, and sender as parameters, and creates and appends new HTML elements to the message list to display these details.
 
 ```javascript
 function openEmail(emailSubject, emailContent, emailSender) {
@@ -536,7 +536,7 @@ function uploadFile() {
 }
 ```
 
-In summary, the `script.js` file is a simple example of how to simulate the addition of new emails to an email client interface, handle user interactions with the interface, and prepare a file for upload using JavaScript.
+In summary, the `script.js` file is a simple example of how to simulate the addition of new emailDummies to an emailDummy client interface, handle user interactions with the interface, and prepare a file for upload using JavaScript.
 
 <br>
 
@@ -587,11 +587,11 @@ The `MailResponse.mv.db` file is the database file for the H2 database used in t
 <br>
 
 ### pom.xml:
-The project `MailResponses` is a Java-based application built with Spring Boot and Maven. It interacts with the OpenAI GPT-3 API to handle email responses. The backend, written in Java, includes classes for interacting with the OpenAI API, managing emails, and handling database operations. The frontend, written in HTML, CSS, and JavaScript, provides a user interface for the email client application.
+The project `MailResponses` is a Java-based application built with Spring Boot and Maven. It interacts with the OpenAI GPT-3 API to handle emailDummy responses. The backend, written in Java, includes classes for interacting with the OpenAI API, managing emailDummies, and handling database operations. The frontend, written in HTML, CSS, and JavaScript, provides a user interface for the emailDummy client application.
 
-Key backend classes include `ChatGPT.java` for interacting with the OpenAI API, `Email.java` as a JPA entity representing an email, `EmailDatabase.java` for database operations, and `EmailUtil.java` for sending emails using JavaMail API.
+Key backend classes include `ChatGPT.java` for interacting with the OpenAI API, `Email.java` as a JPA entity representing an emailDummy, `EmailDatabase.java` for database operations, and `EmailUtil.java` for sending emailDummies using JavaMail API.
 
-The frontend includes `index.html` for the user interface, `script.js` for handling user interactions and simulating email addition, and `style.css` for styling the webpage.
+The frontend includes `index.html` for the user interface, `script.js` for handling user interactions and simulating emailDummy addition, and `style.css` for styling the webpage.
 
 The `application.properties` file configures the H2 database connection and Hibernate settings. The `MailResponse.mv.db` file is the H2 database file storing all the data of the application. The `pom.xml` file is a Maven configuration file specifying the project's dependencies and build settings.
 

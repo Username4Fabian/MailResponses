@@ -1,6 +1,5 @@
 package htlle.mailresponse.ChatGPT;
 
-import htlle.mailresponse.Database.EmailDatabase;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.*;
@@ -18,9 +17,6 @@ public class ChatGPT {
         String output = new BufferedReader(new InputStreamReader(con.getInputStream())).lines().reduce((a, b) -> a + b).get();
         String response = new JSONObject(output).getJSONArray("choices").getJSONObject(0).getString("text").trim();
         System.out.println(response);
-
-        EmailDatabase db = new EmailDatabase();
-        db.insertResponse("", "chatGPT", "Response to: " + text, response);
 
         return new JSONObject(output).getJSONArray("choices").getJSONObject(0).getString("text");
     }

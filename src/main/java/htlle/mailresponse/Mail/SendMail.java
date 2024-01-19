@@ -2,8 +2,6 @@ package htlle.mailresponse.Mail;
 
 
 
-import htlle.mailresponse.Mail.EmailUtil;
-
 import java.util.Properties;
 import javax.mail.Authenticator;
 import javax.mail.PasswordAuthentication;
@@ -27,12 +25,7 @@ public class SendMail {
     //final String fromEmail = "bikebuilder03@outlook.com"; //requires valid gmail id
     //final String password = "hutter1234"; // correct password for gmail id
 
-    public SendMail(String fromEmail, String password) {
-        this.fromEmail = fromEmail;
-        this.emailPassword = password;
-    }
-
-    public void sendEmail(String toEmail, String subject, String message) {
+    public static void sendEmail(EmailDummy emailDummy) {
         System.out.println("TLSEmail Start");
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp-mail.outlook.com"); //SMTP Host
@@ -48,12 +41,12 @@ public class SendMail {
         Authenticator auth = new Authenticator() {
             //override the getPasswordAuthentication method
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(fromEmail, emailPassword);
+                return new PasswordAuthentication(emailDummy.getUser().getEmail(), emailDummy.getUser().getPassword());
             }
         };
         Session session = Session.getInstance(props, auth);
 
-        EmailUtil.sendEmail(session, toEmail, fromEmail, subject, message);
+        EmailUtil.sendEmail(session, emailDummy.getReceiver(), emailDummy.getUser().getEmail(), emailDummy.getSubject(), emailDummy.getContent());
 
     }
 

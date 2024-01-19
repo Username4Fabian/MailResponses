@@ -1,28 +1,39 @@
 package htlle.mailresponse.Mail;
+import htlle.mailresponse.model.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 
 import java.sql.Timestamp;
 @Entity
-public class Email {
+public class EmailDummy {
     @Id
     private Long id;
     private String receiver;
-    private String sender;
+    @ManyToOne
+    private User user;
     private String subject;
     private String content;
     private Timestamp timestamp;
 
-    public Email(Long id, String receiver, String sender, String subject, String content, Timestamp timestamp) {
+    public EmailDummy(Long id, String receiver, String subject, String content, User user, Timestamp timestamp) {
         this.id = id;
         this.receiver = receiver;
-        this.sender = sender;
         this.content = content;
         this.subject = subject;
         this.timestamp = timestamp;
+        this.user = user;
     }
 
-    public Email() {
+    public EmailDummy(String receiver, String subject, String content, User user) {
+        this.user = user;
+        this.receiver = receiver;
+        this.content = content;
+        this.subject = subject;
+        this.timestamp = new Timestamp(System.currentTimeMillis());
+    }
+
+    public EmailDummy() {
 
     }
 
@@ -32,14 +43,6 @@ public class Email {
 
     public void setReceiver(String receiver) {
         this.receiver = receiver;
-    }
-
-    public String getSender() {
-        return sender;
-    }
-
-    public void setSender(String sender) {
-        this.sender = sender;
     }
 
     public Long getId() {
@@ -74,4 +77,11 @@ public class Email {
         this.timestamp = timestamp;
     }
 
+    public User getUser(){
+        return user;
+    }
+
+    public void setUser(User user){
+        this.user = user;
+    }
 }
