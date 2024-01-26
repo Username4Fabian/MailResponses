@@ -7,9 +7,6 @@ import javax.mail.Session;
 
 public class SendMail {
 
-    private String fromEmail;
-    private String emailPassword;
-
     public static void sendEmail(EmailDummy emailDummy) {
         System.out.println("TLSEmail Start");
         Properties props = new Properties();

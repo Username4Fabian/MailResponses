@@ -1,21 +1,18 @@
 package htlle.mailresponse;
 
+import htlle.mailresponse.model.User;
+
 import java.util.Properties;
 import javax.mail.*;
 
 public class ReceiveMail {
 
-    private String accountEmail;
-    private String password;
-
-    private ReceiveMail(String accountEmail, String password) {
-        this.accountEmail = accountEmail;
-        this.password = password;
-    }
-
-    public Message[] receiveEmails() {
+    public static Message[] receiveEmails(User user) {
         // Set the Outlook email account details
         String host = "outlook.office365.com";
+
+        String accountEmail = user.getEmail();
+        String password = user.getPassword();
 
         // Set the properties for the email session
         Properties properties = new Properties();
