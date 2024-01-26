@@ -2,45 +2,68 @@ package htlle.mailresponse.ChatGPT;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
+
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Properties;
+import java.util.*;
 
 public class ChatGPT {
     private static final String API_Key = loadApiKey();
 
-    public static String chatGPT(String responseMood, String text) throws Exception {
+    public static String getAIResponseFromOpenAI(String mood, String userMessage) {
+        if(userMessage.toLowerCase().contains("penis")) {
+            return "Böses Wort";
+        }
 
-        JSONObject data = getJsonObject(responseMood, text);
-        HttpURLConnection con = getHttpURLConnection(data);
-        String output = new BufferedReader(new InputStreamReader(con.getInputStream())).lines().reduce((a, b) -> a + b).get();
-        String response = new JSONObject(output).getJSONArray("choices").getJSONObject(0).getString("text").trim();
-        System.out.println(response);
+        String openAIEndpoint = "https://api.openai.com/v1/chat/completions";
+        String model = "gpt-3.5-turbo";
+        int maxTokens = 100;
 
-        return new JSONObject(output).getJSONArray("choices").getJSONObject(0).getString("text");
-    }
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + API_Key);
+        headers.setContentType(MediaType.APPLICATION_JSON);
 
-    private static HttpURLConnection getHttpURLConnection(JSONObject data) throws IOException {
-        String url = "https://api.openai.com/v1/completions";
-        HttpURLConnection con = (HttpURLConnection) new URL(url).openConnection();
+        List<Map<String, String>> messages = new ArrayList<>();
+        Map<String, String> userMessageMap = new HashMap<>();
+        userMessageMap.put("role", "user");
+        userMessageMap.put("content", mood + ": " + userMessage);
+        messages.add(userMessageMap);
 
-        con.setRequestMethod("POST");
-        con.setRequestProperty("Content-Type", "application/json");
-        con.setRequestProperty("Authorization", "Bearer " + API_Key);
+        Map<String, Object> requestBody = new HashMap<>();
+        requestBody.put("model", model);
+        requestBody.put("messages", messages);
+        requestBody.put("max_tokens", maxTokens);
 
-        con.setDoOutput(true);
-        con.getOutputStream().write(data.toString().getBytes());
-        return con;
-    }
+        HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
 
-    private static JSONObject getJsonObject(String responseMood, String text) throws JSONException {
-        JSONObject data = new JSONObject();
-        data.put("model", "gpt-3.5-turbo");
-        data.put("prompt", responseMood + ": " + text);
-        data.put("max_tokens", 4000);
-        data.put("temperature", 1.0);
-        return data;
+        ResponseEntity<Map> response = restTemplate.postForEntity(openAIEndpoint, requestEntity, Map.class);
+
+        if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
+            Map<String, Object> responseBody = response.getBody();
+            List<Map<String, Object>> choices = (List<Map<String, Object>>) responseBody.get("choices");
+            if (!choices.isEmpty()) {
+                Map<String, Object> choice = choices.get(0);
+                Map<String, Object> message = (Map<String, Object>) choice.get("message");
+                return (String) message.get("content");
+            } else {
+                return "Empty response from OpenAI";
+            }
+        } else {
+            String errorMessage = "Error from OpenAI: ";
+            if (response.getBody() != null) {
+                errorMessage += response.getBody().toString();
+            } else {
+                errorMessage += response.getStatusCode();
+            }
+            throw new RuntimeException(errorMessage);
+        }
     }
 
     public static String loadApiKey() {

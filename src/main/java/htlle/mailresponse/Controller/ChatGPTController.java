@@ -12,6 +12,6 @@ public class ChatGPTController {
 
     @PostMapping("/getResponse")
     public String getResponse(@RequestParam String mood,@RequestParam String message) throws Exception {
-        return ChatGPT.chatGPT(mood, message);
+        return ChatGPT.getAIResponseFromOpenAI(mood, message);
     }
 }
