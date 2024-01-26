@@ -36,7 +36,7 @@ public class ChatGPT {
 
     private static JSONObject getJsonObject(String responseMood, String text) throws JSONException {
         JSONObject data = new JSONObject();
-        data.put("model", "text-davinci-003");
+        data.put("model", "gpt-3.5-turbo");
         data.put("prompt", responseMood + ": " + text);
         data.put("max_tokens", 4000);
         data.put("temperature", 1.0);
