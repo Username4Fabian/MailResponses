@@ -1,16 +1,16 @@
 package htlle.mailresponse.Controller;
 
+
 import htlle.mailresponse.Mail.EmailDummy;
+import htlle.mailresponse.Mail.SendMail;
 import htlle.mailresponse.ReceiveMail;
 import htlle.mailresponse.Repository.EmailRepository;
-import htlle.mailresponse.Mail.SendMail;
 import htlle.mailresponse.Repository.UserRepository;
 import htlle.mailresponse.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import javax.mail.Message;
 import java.util.List;
+
 
 @RestController
 @RequestMapping("/email")
@@ -42,7 +42,7 @@ public class EmailController {
         return emailDummy;
     }
 
-    @PostMapping("/refreshEmails")
+    @PostMapping("/receiveEmails")
     public List<EmailDummy> refreshEmails(@RequestParam int userId) {
         User user = userRepository.findById(userId);
         return ReceiveMail.receiveEmails(user);

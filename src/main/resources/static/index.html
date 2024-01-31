@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/resources.images/browser.ico">
     <title>Email Client</title>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -16,9 +17,6 @@
             <div class="accounts-list">
                 <h2>Accounts</h2>
                 <ul id="account-list">
-                    <li>HTL1@htl-leoben.at</li>
-                    <li>HTL2@htl-leoben.at</li>
-
                 </ul>
             </div>
         </div>
@@ -27,7 +25,7 @@
         <div class="sidebar-for-mails">
             <div class="emailDummy-list">
                 <h2>Emails</h2>
-                <ul id="emailDummy-list">
+                <ul id="mail-list">
 
 
                 </ul>
@@ -46,9 +44,9 @@
         </div>
 
         <div class="personTo">
-            <input placeholder="To:">
-            <input placeholder="Subject:">
-            <button>ChatGPT Hilfe</button>
+            <input id="to" placeholder="To:">
+            <input id="subject" placeholder="Subject:">
+            <button id="gptHelp">ChatGPT Hilfe</button>
             <label class="file-input-button" id="uploadLabel">
                 <input type="file" id="myFile" name="myFile" class="file-input" onclick="uploadFile()">
                 <img src="resources.images/file-upload-duotone.svg" alt="Datei Auswählen">
@@ -56,8 +54,8 @@
         </div>
 
         <div class="message-input">
-            <textarea placeholder="Nachricht eingeben"></textarea>
-            <button>Senden</button>
+            <textarea id="input" placeholder="Nachricht eingeben"></textarea>
+            <button id="sendButton">Senden</button>
         </div>
 
     </div>

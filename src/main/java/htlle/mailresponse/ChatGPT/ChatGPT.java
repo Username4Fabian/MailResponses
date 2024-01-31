@@ -32,6 +32,12 @@ public class ChatGPT {
 
         List<Map<String, String>> messages = new ArrayList<>();
         Map<String, String> userMessageMap = new HashMap<>();
+
+        Map<String, String> systemMessageMap = new HashMap<>();
+        systemMessageMap.put("role", "system");
+        systemMessageMap.put("content", "You are a helpful E-Mail assistant. The message sent to you is a E-Mail, the user needs an answer to. Do not referer to the user themselves, just generate a proper response E-Mail. Make sure to match the general tone of the input message.");
+        messages.add(systemMessageMap);
+
         userMessageMap.put("role", "user");
         userMessageMap.put("content", mood + ": " + userMessage);
         messages.add(userMessageMap);
