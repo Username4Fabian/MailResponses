@@ -1,20 +1,27 @@
-package htlle.mailresponse;
+package htlle.mailresponse.Mail;
 
-import htlle.mailresponse.Mail.EmailDummy;
 import htlle.mailresponse.model.User;
 
+import javax.mail.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-import javax.mail.*;
 
+/**
+ * This class is responsible for receiving emails.
+ */
 public class ReceiveMail {
 
+    /**
+     * Receives emails for a specific user.
+     *
+     * @param user The user to receive emails for.
+     * @return A list of received emails.
+     */
     public static List<EmailDummy> receiveEmails(User user) {
         // Set the Outlook email account details
         String host = "mail.edis.at";
-
         String accountEmail = user.getEmail();
         String password = user.getPassword();
 
@@ -27,10 +34,11 @@ public class ReceiveMail {
         properties.put("mail.imaps.ssl.protocols", "TLSv1.2"); // Specify the appropriate TLS version
         properties.put("mail.imaps.ssl.ciphersuites", "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256"); // Specify an appropriate cipher suite
 
+        List<EmailDummy> emails = new ArrayList<>();
+
         try {
             // Create the email session
             Session emailSession = Session.getInstance(properties);
-            //emailSession.setDebug(true); // Enable debugging
 
             // Create the IMAP store
             Store store = emailSession.getStore("imaps");
@@ -43,41 +51,29 @@ public class ReceiveMail {
             // Get the messages from the Inbox
             Message[] messages = inbox.getMessages();
 
-            List<EmailDummy> emails = new ArrayList<>();
-
-            for (int i = 0; i < messages.length; i++) {
-                EmailDummy emailDummy = new EmailDummy(messages[i].getFrom()[0].toString(), messages[i].getSubject(), getTextMessageContent(messages[i]), user, new Timestamp(messages[i].getSentDate().getTime()));
-                System.out.println(emailDummy.getContent());
+            for (Message message : messages) {
+                EmailDummy emailDummy = new EmailDummy(message.getFrom()[0].toString(), message.getSubject(), getTextMessageContent(message), user, new Timestamp(message.getSentDate().getTime()));
                 emails.add(emailDummy);
             }
-
-
-            // Print details of each message
-            /*
-            for (int i = 0; i < messages.length; i++) {
-                System.out.println("Subject: " + messages[i].getSubject());
-                System.out.println("From: " + messages[i].getFrom()[0]);
-                System.out.println("Date: " + messages[i].getSentDate());
-                System.out.println("Message: " + getTextMessageContent(messages[i]));
-                System.out.println("---------------------------------------------");
-            }
-             */
 
             // Close the store and folder
             inbox.close(false);
             store.close();
 
-
-            return emails;
-
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return null;
+        return emails;
     }
 
-    // Helper method to get the text content of a message
+    /**
+     * Helper method to get the text content of a message.
+     *
+     * @param message The message to get the content from.
+     * @return The text content of the message.
+     * @throws Exception If there is an error while getting the content.
+     */
     private static String getTextMessageContent(Message message) throws Exception {
         Object content = message.getContent();
         if (content instanceof String) {
@@ -99,7 +95,13 @@ public class ReceiveMail {
         }
     }
 
-    // Helper method to get the text content of a body part
+    /**
+     * Helper method to get the text content of a body part.
+     *
+     * @param bodyPart The body part to get the content from.
+     * @return The text content of the body part.
+     * @throws Exception If there is an error while getting the content.
+     */
     private static String getTextMessageContent(BodyPart bodyPart) throws Exception {
         Object content = bodyPart.getContent();
         if (content instanceof String) {

@@ -1,65 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Meta tags for character set and viewport -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Link to the favicon and the title of the webpage -->
     <link rel="icon" href="/resources.images/browser.ico">
     <title>Email Client</title>
+
+    <!-- Link to the stylesheet -->
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+<!-- Main application container -->
 <div class="app">
-
-    <flex class="flex-for-sidebars">
-
+    <!-- Container for sidebars -->
+    <div class="flex-for-sidebars">
+        <!-- Sidebar for accounts -->
         <div class="sidebar-for-accounts">
             <div class="accounts-list">
                 <h2>Accounts</h2>
-                <ul id="account-list">
-                </ul>
+                <ul id="account-list"></ul>
             </div>
         </div>
 
-
+        <!-- Sidebar for mails -->
         <div class="sidebar-for-mails">
             <div class="emailDummy-list">
                 <h2>Emails</h2>
-                <ul id="mail-list">
-
-
-                </ul>
+                <ul id="mail-list"></ul>
             </div>
         </div>
+    </div>
 
-    </flex>
-
-
+    <!-- Main content area -->
     <div class="main">
+        <!-- Header area -->
         <div class="header">
             <h1>Email Client</h1>
         </div>
+
+        <!-- Message list area -->
         <div class="message-list" id="message-list">
             <p>Message 1</p>
         </div>
 
+        <!-- Area for entering recipient and subject -->
         <div class="personTo">
             <input id="to" placeholder="To:">
             <input id="subject" placeholder="Subject:">
             <button id="gptHelp">ChatGPT Hilfe</button>
+
+            <!-- File input button -->
             <label class="file-input-button" id="uploadLabel">
                 <input type="file" id="myFile" name="myFile" class="file-input" onclick="uploadFile()">
                 <img src="resources.images/file-upload-duotone.svg" alt="Datei Auswählen">
             </label>
         </div>
 
+        <!-- Message input area -->
         <div class="message-input">
             <textarea id="input" placeholder="Nachricht eingeben"></textarea>
             <button id="sendButton">Senden</button>
         </div>
-
     </div>
 </div>
+
+<!-- Link to the script file -->
 <script src="script.js"></script>
 </body>
 </html>

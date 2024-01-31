@@ -1,3 +1,4 @@
+// Event listener for DOMContentLoaded event
 document.addEventListener("DOMContentLoaded", function () {
     getallUsers();
     receiveMails();
@@ -6,6 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
     sendButton.addEventListener('click', sendMail);
 });
 
+// Event listener for click event on 'gptHelp' button
 document.getElementById('gptHelp').addEventListener('click', function() {
     const emailContent = document.getElementById('message-list').textContent;
     const mood = 'helpful';
@@ -29,8 +31,7 @@ document.getElementById('gptHelp').addEventListener('click', function() {
         .catch(error => console.error('Error:', error));
 });
 
-
-
+// Function to receive mails
 function receiveMails() {
     const userId = 2;
     const url = new URL('/email/receiveEmails', window.location.origin);
@@ -73,6 +74,7 @@ function receiveMails() {
         .catch(error => console.error('Error:', error));
 }
 
+// Function to send mail
 function sendMail() {
     const userId = 2;
     const to = document.getElementById('to').value;
@@ -101,6 +103,7 @@ function sendMail() {
         .catch(error => console.error('Error:', error));
 }
 
+// Function to get all users
 function getallUsers(){
     fetch('/getUser')
         .then(response => response.json())

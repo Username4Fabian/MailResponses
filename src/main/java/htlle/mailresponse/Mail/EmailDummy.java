@@ -1,23 +1,38 @@
 package htlle.mailresponse.Mail;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import htlle.mailresponse.model.User;
 import jakarta.persistence.*;
 
 import java.sql.Timestamp;
+
+/**
+ * This class represents a dummy email entity.
+ */
 @Entity
 public class EmailDummy {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String receiver;
+
     @ManyToOne
     @JsonIgnoreProperties({"emails"})
     private User user;
+
     private String subject;
     private String content;
     private Timestamp timestamp;
 
+    /**
+     * Constructor with all parameters.
+     *
+     * @param receiver The receiver of the email.
+     * @param subject The subject of the email.
+     * @param content The content of the email.
+     * @param user The user who sends the email.
+     * @param timestamp The timestamp when the email is sent.
+     */
     public EmailDummy(String receiver, String subject, String content, User user, Timestamp timestamp) {
         this.receiver = receiver;
         this.content = content;
@@ -26,6 +41,14 @@ public class EmailDummy {
         this.user = user;
     }
 
+    /**
+     * Constructor without timestamp. The timestamp will be set to the current time.
+     *
+     * @param receiver The receiver of the email.
+     * @param subject The subject of the email.
+     * @param content The content of the email.
+     * @param user The user who sends the email.
+     */
     public EmailDummy(String receiver, String subject, String content, User user) {
         this.user = user;
         this.receiver = receiver;
@@ -34,9 +57,13 @@ public class EmailDummy {
         this.timestamp = new Timestamp(System.currentTimeMillis());
     }
 
+    /**
+     * Default constructor.
+     */
     public EmailDummy() {
-
     }
+
+    // Getters and setters with standard Java naming conventions
 
     public String getReceiver() {
         return receiver;
