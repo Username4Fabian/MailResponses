@@ -43,7 +43,7 @@ public class EmailController {
     }
 
     @PostMapping("/refreshEmails")
-    public Message[] refreshEmails(@RequestParam int userId) {
+    public List<EmailDummy> refreshEmails(@RequestParam int userId) {
         User user = userRepository.findById(userId);
         return ReceiveMail.receiveEmails(user);
     }

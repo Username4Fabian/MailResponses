@@ -1,15 +1,19 @@
 package htlle.mailresponse;
 
+import htlle.mailresponse.Mail.EmailDummy;
 import htlle.mailresponse.model.User;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import javax.mail.*;
 
 public class ReceiveMail {
 
-    public static Message[] receiveEmails(User user) {
+    public static List<EmailDummy> receiveEmails(User user) {
         // Set the Outlook email account details
-        String host = "outlook.office365.com";
+        String host = "mail.edis.at";
 
         String accountEmail = user.getEmail();
         String password = user.getPassword();
@@ -39,6 +43,15 @@ public class ReceiveMail {
             // Get the messages from the Inbox
             Message[] messages = inbox.getMessages();
 
+            List<EmailDummy> emails = new ArrayList<>();
+
+            for (int i = 0; i < messages.length; i++) {
+                EmailDummy emailDummy = new EmailDummy(messages[i].getFrom()[0].toString(), messages[i].getSubject(), getTextMessageContent(messages[i]), user, new Timestamp(messages[i].getSentDate().getTime()));
+                System.out.println(emailDummy.getContent());
+                emails.add(emailDummy);
+            }
+
+
             // Print details of each message
             /*
             for (int i = 0; i < messages.length; i++) {
@@ -54,7 +67,8 @@ public class ReceiveMail {
             inbox.close(false);
             store.close();
 
-            return messages;
+
+            return emails;
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -64,7 +78,7 @@ public class ReceiveMail {
     }
 
     // Helper method to get the text content of a message
-    private String getTextMessageContent(Message message) throws Exception {
+    private static String getTextMessageContent(Message message) throws Exception {
         Object content = message.getContent();
         if (content instanceof String) {
             return (String) content;
@@ -86,7 +100,7 @@ public class ReceiveMail {
     }
 
     // Helper method to get the text content of a body part
-    private String getTextMessageContent(BodyPart bodyPart) throws Exception {
+    private static String getTextMessageContent(BodyPart bodyPart) throws Exception {
         Object content = bodyPart.getContent();
         if (content instanceof String) {
             return (String) content;

@@ -1,5 +1,6 @@
 package htlle.mailresponse.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import htlle.mailresponse.Mail.EmailDummy;
 import jakarta.persistence.*;
 
@@ -15,6 +16,7 @@ public class User {
     private int id;
 
     private String email;
+    @JsonIgnore
     private String password;
 
     @OneToMany(mappedBy = "user")
