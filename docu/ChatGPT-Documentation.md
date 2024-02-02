@@ -1,76 +1,77 @@
-# ChatGPT-Dokumentation
+## Dokumentation der Klasse `ChatGPT`
 
+Die Klasse `ChatGPT` befindet sich im Paket `htlle.mailresponse.ChatGPT` und ist für die Interaktion mit der OpenAI API konzipiert. Ihr Hauptzweck ist die Generierung von KI-basierten Antworten auf Benutzernachrichten, insbesondere im Kontext von E-Mail-Antwortsystemen.
 
-- Zuerst muss in conig/config.json der API-key eingetragen werden.
-```json
-{
-"api_key": "Your API-KEY"
-}
-```
+### Hauptmerkmale
 
-- Um die API zu verwenden kann die **chatGPT** Methode verwendet werden.
-- Als erstes Argument kann die Stimmung der Nachricht übergeben werden.
-- Als zweites Argument kann das eigentliche Email übergeben werden.
-```java
-    chatGPT("Antworte auf diese Email in einem aggresiven beleidigenden Stil", input);
-```
+- **Interaktion mit OpenAI API**: Sendet Benutzernachrichten an die OpenAI API und empfängt KI-generierte Antworten.
+- **Inhaltsfilterung**: Prüft die Benutzernachricht auf unangemessene Inhalte, bevor sie an die API gesendet wird.
+- **API-Schlüssel Management**: Lädt den für die Authentifizierung bei der OpenAI API benötigten Schlüssel dynamisch aus einer Konfigurationsdatei.
 
+### Methodenübersicht
 
-- Hier wird der API-Key eingelesen und zur späteren Verwendung gespeichert.
-```java
-public static String loadApiKey() {
-        ObjectMapper objectMapper = new ObjectMapper();
-        File configFile = new File("config/config.json");
+#### `public static String getAIResponseFromOpenAI(String mood, String userMessage)`
 
-        try {
-            ApiKeyConfig apiKeyConfig = objectMapper.readValue(configFile, ApiKeyConfig.class);
-            String apiKey = apiKeyConfig.getApiKey();
-            return apiKey;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-```
+Diese Methode ist das Herzstück der Klasse und verantwortlich für den gesamten Prozess der Anfrageerstellung, Sendung und Antwortverarbeitung von der OpenAI API.
 
-- Hier findet der API Call zur OpenAI API statt.
-```java
-private static HttpURLConnection getHttpURLConnection(JSONObject data) throws IOException {
-        String url = "https://api.openai.com/v1/completions";
-        HttpURLConnection con = (HttpURLConnection) new URL(url).openConnection();
+- **Parameter**:
+  - `mood`: Die Stimmung der Benutzernachricht, die den Ton der Antwort beeinflussen kann.
+  - `userMessage`: Die eigentliche Nachricht des Benutzers, die verarbeitet werden soll.
 
-        con.setRequestMethod("POST");
-        con.setRequestProperty("Content-Type", "application/json");
-        con.setRequestProperty("Authorization", "Bearer " + API_Key);
+- **Rückgabewert**: Die von der OpenAI API generierte Antwort als `String`.
 
-        con.setDoOutput(true);
-        con.getOutputStream().write(data.toString().getBytes());
-        return con;
-    }
-```
+- **Funktionsweise**:
+  1. Prüft die Nachricht auf unangemessene Inhalte.
+  2. Bereitet die HTTP-Anfrage vor, einschließlich der Authentifizierung und des Anfragekörpers.
+  3. Verarbeitet die Antwort von OpenAI und extrahiert den Antworttext.
 
-- Dieser wird dann hier weiterverarbeitet
-```java
-public static String chatGPT(String responseMood, String text) throws Exception {
+- **Beispielcode**:
 
-        JSONObject data = getJsonObject(responseMood, text);
+  ```java
+  HttpHeaders headers = new HttpHeaders();
+  headers.set("Authorization", "Bearer " + API_KEY);
+  headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpURLConnection con = getHttpURLConnection(data);
+  Map<String, Object> requestBody = new HashMap<>();
+  requestBody.put("model", "gpt-3.5-turbo");
+  requestBody.put("messages", messages);
+  requestBody.put("max_tokens", 150);
 
-        String output = new BufferedReader(new InputStreamReader(con.getInputStream())).lines().reduce((a, b) -> a + b).get();
+  HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
+  ResponseEntity<Map> response = restTemplate.postForEntity(openAIEndpoint, requestEntity, Map.class);
+  ```
 
-        return new JSONObject(output).getJSONArray("choices").getJSONObject(0).getString("text");
-    }
-```
+#### `private static String loadApiKey()`
 
-- Sehr wichtig sind auch die Einstellungen die im JSON String getroffen werden müssen
-```java
-private static JSONObject getJsonObject(String responseMood, String text) throws JSONException {
-        JSONObject data = new JSONObject();
-        data.put("model", "text-davinci-003");
-        data.put("prompt", responseMood + ": " + text);
-        data.put("max_tokens", 4000);
-        data.put("temperature", 1.0);
-        return data;
-    }
-```
+Lädt den API-Schlüssel aus der Konfigurationsdatei `application.properties`.
+
+- **Rückgabewert**: Der geladene API-Schlüssel als `String`.
+
+- **Funktionsweise**:
+  1. Öffnet die Konfigurationsdatei.
+  2. Liest den Wert des API-Schlüssels aus.
+  3. Gibt den Schlüssel zurück oder `null` bei Fehlern.
+
+- **Beispielcode**:
+
+  ```java
+  Properties prop = new Properties();
+  try (InputStream input = new FileInputStream("src/main/resources/application.properties")) {
+      prop.load(input);
+      return prop.getProperty("openai.api.key");
+  } catch (IOException ignored) {
+      return null;
+  }
+  ```
+
+### Einsatzszenarien
+
+Die Klasse `ChatGPT` eignet sich für Projekte, die eine Integration mit der OpenAI API benötigen, um automatisierte Antworten auf Benutzernachrichten zu generieren. Dies kann in verschiedenen Kontexten nützlich sein, z.B. in Kundensupport-Systemen, E-Mail-Automatisierungsdiensten oder Chatbots.
+
+### Sicherheitshinweise
+
+Bei der Verwendung dieser Klasse ist zu beachten, dass der API-Schlüssel sicher gespeichert und verwaltet werden muss, um Missbrauch zu vermeiden. Zudem sollte die Inhaltsfilterung an die spezifischen Anforderungen des Einsatzgebietes angepasst werden.
+
+### Zusammenfassung
+
+Die `ChatGPT`-Klasse bietet eine einfache und effektive Möglichkeit, die OpenAI API in Java-basierten Anwendungen zu nutzen. Durch das dynamische Laden von API-Schlüsseln und die vordefinierte Inhaltsfilterung erleichtert sie die Entwicklung von Anwendungen, die intelligente, KI-gestützte Antworten generieren müssen.
