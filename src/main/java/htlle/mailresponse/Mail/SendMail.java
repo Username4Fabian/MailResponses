@@ -39,6 +39,8 @@ public class SendMail {
      *
      * @return The properties for the email session.
      */
+
+    // Set "reply to" tag
     private static Properties getProperties() {
         Properties props = new Properties();
         props.put("mail.smtp.host", "mailrelay.edis.at"); // SMTP Host
