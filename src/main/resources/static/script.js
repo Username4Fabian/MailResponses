@@ -1,63 +1,121 @@
-
+// Event listener for DOMContentLoaded event
 document.addEventListener("DOMContentLoaded", function () {
-    // Simuliere das Hinzufügen von neuen E-Mails
-    // Funktion zum Hinzufügen einer neuen E-Mail zur Sidebar
-    function addNewEmail(emailSubject, emailContent, emailSender) {
-        const emailList = document.getElementById("email-list");
-        const listItem = document.createElement("li");
-        listItem.textContent = emailSubject;
-        emailList.appendChild(listItem);
+    getallUsers();
+    receiveMails();
 
-        // Füge einen Event-Listener hinzu, um die E-Mail zu öffnen, wenn darauf geklickt wird
-        listItem.addEventListener("click", function () {
-            openEmail(emailSubject, emailContent, emailSender);
-        });
-    }
-
-
-    // const subject =
-    // const content =
-    // const sender =
-    // addNewEmail(subject, content, sender);
-
-// Schleife zum Generieren von 10 E-Mails
-    for (let i = 1; i <= 10; i++) {
-        setTimeout(function () {
-            const subject = "Neue E-Mail " + i;
-            const content = "Inhalt der E-Mail " + i;
-            const sender = "Name " + i;
-            addNewEmail(subject, content, sender);
-        }, i * 2000); // Verzögerung von 2 Sekunden zwischen den E-Mails (kann nach Bedarf angepasst werden)
-    }
-
-
-    // Funktion zum Öffnen einer E-Mail im Hauptbereich
-    function openEmail(emailSubject, emailContent, emailSender) {
-        const messageList = document.getElementById("message-list");
-        messageList.innerHTML = ""; // Lösche den aktuellen Inhalt
-
-        const emailTitle = document.createElement("h2");
-        emailTitle.textContent = "Subject: " + emailSubject;
-
-        const emailSendername = document.createElement("h3");
-        emailSendername.textContent = "Sender: " + emailSender;
-
-        const emailText = document.createElement("p");
-        emailText.textContent = emailContent;
-
-        messageList.appendChild(emailTitle);
-        messageList.appendChild(emailSendername);
-        messageList.appendChild(emailText);
-    }
-
-
-
+    const sendButton = document.getElementById('sendButton');
+    sendButton.addEventListener('click', sendMail);
 });
 
-function uploadFile() {
-    var fileInput = document.getElementById('myFile');
-    var file = fileInput.files[0];
-    var formData = new FormData();
-    formData.append('file', file);
+// Event listener for click event on 'gptHelp' button
+document.getElementById('gptHelp').addEventListener('click', function() {
+    const emailContent = document.getElementById('message-list').textContent;
+    const mood = 'helpful';
 
+    fetch(`/chatGPT/getResponse?mood=${mood}&message=${encodeURIComponent(emailContent)}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status} ${response.statusText}`);
+            }
+            return response.text();
+        })
+        .then(data => {
+            console.log('Response from GPT:', data);
+            document.getElementById('input').value = data;
+        })
+        .catch(error => console.error('Error:', error));
+});
+
+// Function to receive mails
+function receiveMails() {
+    const userId = 2;
+    const url = new URL('/email/receiveEmails', window.location.origin);
+
+    url.searchParams.append('userId', userId);
+
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({})
+    })
+        .then(response => {
+            if (!response.ok) {
+                console.log(response);
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Email received successfully:', data);
+            const mailList = document.getElementById('mail-list');
+            mailList.innerHTML = ''; // Clear the list before adding new items
+            data.forEach(mail => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `${mail.subject}`; // Display subject
+                listItem.addEventListener('click', function() {
+                    document.getElementById('message-list').textContent = mail.content; // Load email content into message-list
+
+                    const emailMatch = mail.receiver.match(/\<(.*?)\>/); // Extract email from receiver string
+                    const email = emailMatch ? emailMatch[1] : mail.receiver; // If match found, use it. Otherwise, use the whole receiver string
+
+                    document.getElementById('to').value = email; // Load sender email into 'to' input field
+                    document.getElementById('subject').value = 'AW: ' + mail.subject; // Load subject into 'subject' input field with 'AW: ' prefix
+                });
+                mailList.appendChild(listItem);
+            });
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+// Function to send mail
+function sendMail() {
+    const userId = 2;
+    const to = document.getElementById('to').value;
+    const subject = document.getElementById('subject').value;
+    const text = document.getElementById('input').value;
+
+    const url = new URL('/email/sendEmail', window.location.origin);
+    url.searchParams.append('userId', userId);
+    url.searchParams.append('to', to);
+    url.searchParams.append('subject', subject);
+    url.searchParams.append('text', text);
+
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => console.log('Email sent successfully:', data))
+        .catch(error => console.error('Error:', error));
+}
+
+// Function to get all users
+function getallUsers(){
+    fetch('/getUser')
+        .then(response => response.json())
+        .then(users => {
+            const userList = document.getElementById('account-list');
+            userList.innerHTML = ''; // Clear the list before adding new items
+
+            users.forEach(user => {
+                const listItem = document.createElement('li');
+                listItem.textContent = user.email; // Assuming the email object has a 'subject' property
+                userList.appendChild(listItem);
+            });
+        })
+        .catch(error => console.error('Error:', error));
 }

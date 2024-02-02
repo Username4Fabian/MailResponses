@@ -9,3 +9,5 @@ spring.h2.console.enabled=true
 
 # Hibernate ddl auto (update: update the schema, create: creates the schema destroying previous data)
 spring.jpa.hibernate.ddl-auto=update
+
+openai.api.key=YOUR_API_KEY

@@ -34,7 +34,7 @@ body {
 .sidebar-for-mails {
 
     width: 250px;
-    text-align: center;
+    text-align: left;
     background-color: #2f3136;
     border-radius: 20px;
     margin-bottom: 20px;
@@ -176,6 +176,12 @@ input[type="file"] {
 
 #email-list li:hover {
     cursor: pointer; /* Hier kannst du den gewünschten Mauszeiger-Stil auswählen, z.B. pointer, crosshair, etc. */
+}
+
+li{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: left;
 }
 
 
